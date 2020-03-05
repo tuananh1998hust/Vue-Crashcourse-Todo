@@ -1,19 +1,45 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <Input v-on:add-todo="addTodo" />
+    <Todos v-bind:todos="todos" v-on:del-todo="deleteTodo" />
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import Todos from './components/Todo';
+import Input from './components/Input';
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    Todos,
+    Input
+  },
+  data() {
+    return {
+      todos: [
+        {
+          id: '0',
+          title: 'Study Vue',
+          completed: true
+        },
+        {
+          id: '1',
+          title: 'Working with project',
+          completed: false
+        }
+      ]
+    };
+  },
+  methods: {
+    deleteTodo(id) {
+      this.todos = this.todos.filter(todo => todo.id != id);
+    },
+    addTodo(newTodo) {
+      this.todos = [...this.todos, newTodo];
+    }
   }
-}
+};
 </script>
 
 <style>
