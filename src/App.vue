@@ -6,6 +6,8 @@
 </template>
 
 <script>
+import axios from 'axios';
+// Components
 import Todos from './components/Todo';
 import Input from './components/Input';
 
@@ -38,6 +40,11 @@ export default {
     addTodo(newTodo) {
       this.todos = [...this.todos, newTodo];
     }
+  },
+  async created() {
+    const res = await axios.get('https://jsonplaceholder.typicode.com/todos');
+
+    this.todos = res.data;
   }
 };
 </script>
