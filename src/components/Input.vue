@@ -1,12 +1,12 @@
 <template>
   <div>
     <input type="text" name="title" v-model="title" placeholder="Add Todo..." />
-    <button @click="addTodo">Add Todo</button>
+    <button @click="onClick">Add Todo</button>
   </div>
 </template>
 
 <script>
-import { v4 as uuidv4 } from 'uuid';
+import { mapActions } from 'vuex';
 
 export default {
   name: 'Input',
@@ -16,16 +16,12 @@ export default {
     };
   },
   methods: {
-    addTodo(e) {
+    ...mapActions(['addTodo']),
+
+    onClick(e) {
       e.preventDefault();
 
-      const newTodo = {
-        id: uuidv4(),
-        title: this.title,
-        completed: false
-      };
-
-      this.$emit('add-todo', newTodo);
+      this.addTodo(this.title);
 
       this.title = '';
     }

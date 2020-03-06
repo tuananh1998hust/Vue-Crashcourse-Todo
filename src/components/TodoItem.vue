@@ -1,18 +1,27 @@
 <template>
   <div class="todo-item">
-    <p v-bind:class="{'is-completed': todo.completed}" v-on:click="onClick(todo)">{{todo.title}}</p>
+    <p
+      v-bind:class="{ 'is-completed': todo.completed }"
+      v-on:click="onClick(todo)"
+    >
+      {{ todo.title }}
+    </p>
 
-    <button class="btn-del" @click="$emit('del-todo', todo.id)">delete</button>
+    <button class="btn-del" @click="onClick">delete</button>
   </div>
 </template>
 
 <script>
+import { mapActions } from 'vuex';
+
 export default {
-  name: "TodoItem",
-  props: ["todo"],
+  name: 'TodoItem',
+  props: ['todo'],
   methods: {
+    ...mapActions(['updateTodo']),
+
     onClick(todo) {
-      todo.completed = !todo.completed;
+      this.updateTodo(todo.id);
     }
   }
 };
